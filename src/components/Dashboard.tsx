@@ -1,5 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import Layout from './Layout';
+import Card from './Card';
 
 const fetchTopCoins = async () => {
   const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
@@ -26,16 +28,14 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <>
       <h1>Top Coins</h1>
-      <ul>
-        {data.map((coin) => (
-          <li key={coin.id}>
-            <strong>{coin.name}</strong> ({coin.symbol}): ${coin.current_price}
-          </li>
+      <Layout>
+        {data.map((coin, index) => (
+          <Card key={index} coin={coin} />
         ))}
-      </ul>
-    </div>
+      </Layout>
+    </>
   );
 };
 
