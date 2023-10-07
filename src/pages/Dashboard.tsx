@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import Layout from './Layout';
-import Card from './Card';
+import Layout from '../components/Layout';
+import Card from '../components/Card';
 
 const fetchTopCoins = async () => {
   const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
