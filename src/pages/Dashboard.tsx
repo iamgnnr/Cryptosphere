@@ -8,7 +8,7 @@ const fetchTopCoins = async () => {
     params: {
       vs_currency: 'usd', // You can change this to the currency of your choice
       order: 'market_cap_desc',
-      per_page: 10, // Number of top coins to fetch
+      per_page: 100, // Number of top coins to fetch
       page: 1,
       sparkline: false, // You can set this to true if you want sparkline data
     },
@@ -16,6 +16,24 @@ const fetchTopCoins = async () => {
 
   return response.data;
 };
+
+const dataHelper = async () => {
+  const response = await axios.get('http://localhost:3000/data', {
+    params: {
+      vs_currency: 'usd', // You can change this to the currency of your choice
+      order: 'market_cap_desc',
+      per_page: 100, // Number of top coins to fetch
+      page: 1,
+      sparkline: false, // You can set this to true if you want sparkline data
+    },
+  });
+
+  return response.data;
+};
+
+
+
+
 
 const Dashboard = () => {
   const { data, isLoading, isError, error } = useQuery('topCoins', fetchTopCoins);
