@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/coin/:coinId" element={<CoinDetail />} />
+          <Route path=":coinId" element={<CoinDetail />} />
         </Routes>
       </Router>
     </QueryClientProvider>
