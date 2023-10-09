@@ -2,8 +2,9 @@ import React from 'react'; // Import React
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import DataHelper from '../components/DataHelper';
 
-const fetchCoinData = async (coinId) => {
+const fetchCoinData = async (coinId: string) => {
   const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}`, {
     params: {
       vs_currency: 'usd', // You can change this to the currency of your choice
@@ -19,7 +20,7 @@ const fetchCoinData = async (coinId) => {
 
 const CoinDetail = () => {
   const { coinId } = useParams();
-  const { data, isLoading, isError, error } = useQuery(['coinData', coinId], () => fetchCoinData(coinId));
+  const { data, isLoading, isError, error } = useQuery(['coinData', coinId], DataHelper);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,6 +29,7 @@ const CoinDetail = () => {
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
+  console.log(data.name);
 
   return (
     <div>
