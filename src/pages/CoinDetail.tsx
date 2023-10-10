@@ -1,18 +1,25 @@
-import React from 'react'; // Import React
-import { useQuery } from 'react-query';
+import { useQuery, QueryClient } from 'react-query';
 import axios from 'axios';
-import { useParams } from "react-router-dom";
-import DataHelper from '../components/DataHelper';
+import { useParams } from 'react-router-dom';
 import Graph from '../components/Graph';
 
-const fetchCoinData = async (coinId: string) => {
+const queryClient = new QueryClient();
+
+const fetchCoinData = async (coinId) => {
   const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}`, {
     params: {
-      vs_currency: 'usd', // You can change this to the currency of your choice
-      order: 'market_cap_desc',
-      per_page: 100, // Number of top coins to fetch
-      page: 1,
-      sparkline: false, // You can set this to true if you want sparkline data
+      vs_currency: 'usd',
+    },
+  });
+
+  return response.data;
+};
+
+const fetchGraphData = async (coinId) => {
+  const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
+    params: {
+      vs_currency: 'usd',
+      days: 7,
     },
   });
 
@@ -20,39 +27,45 @@ const fetchCoinData = async (coinId: string) => {
 };
 
 const CoinDetail = () => {
-
-  const dataPoints = [
-    { label: 'A', value: 10 },
-    { label: 'B', value: 20 },
-    { label: 'C', value: 15 },
-    { label: 'D', value: 30 },
-  ];
   const { coinId } = useParams();
-  const { data, isLoading, isError, error } = useQuery(['coinData', coinId], ()=>fetchCoinData(coinId));
+  const { data: coinData, isLoading: isCoinLoading, isError: isCoinError, error: coinError } = useQuery(['coinData', coinId], () =>
+    fetchCoinData(coinId)
+  );
+  const { data: graphData, isLoading: isGraphLoading, isError: isGraphError, error: graphError } = useQuery(
+    ['graphData', coinId],
+    () => fetchGraphData(coinId),
+    {
+      enabled: !!coinData, // Only fetch graph data if coin data is available
+    }
+  );
 
-  if (isLoading) {
+  if (isCoinLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>Error: {error.message}</div>;
+  if (isCoinError) {
+    return <div>Error: {coinError.message}</div>;
   }
 
   return (
     <div>
       <h1>Coin Detail</h1>
       <h2>Detail Page</h2>
-      <Graph data={dataPoints}/>
+      Render your Graph component with graphData here
+      {isGraphLoading ? (
+        <div>Loading graph data...</div>
+      ) : isGraphError ? (
+        <div>Error: {graphError.message}</div>
+      ) : (
+        <Graph data={graphData} />
+      )}
       <ul>
-        <li>Name: {data.name}</li>
-        <li>Symbol: {data.symbol}</li>
-        <li>Market Cap Rank: {data.market_cap_rank}</li>
-        <li>Current Price (USD): {data.market_data.current_price.usd}</li>
-
-        <li dangerouslySetInnerHTML={{__html: data.description?.en}}></li>
+        <li>Name: {coinData.name}</li>
+        <li>Symbol: {coinData.symbol}</li>
+        <li>Market Cap Rank: {coinData.market_cap_rank}</li>
+        <li>Current Price (USD): {coinData.market_data.current_price.usd}</li>
+        <li dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></li>
       </ul>
-
-
     </div>
   );
 };

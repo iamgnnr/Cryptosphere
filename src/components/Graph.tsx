@@ -2,65 +2,69 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const Graph = ({ data }) => {
-  const svgRef = useRef();
+  const graphRef = useRef();
 
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
-    const width = 400;
-    const height = 200;
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+    // Define the dimensions of the graph
+    const width = 800;
+    const height = 400;
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
 
-    // Create scales
-    const xScale = d3
-      .scaleBand()
-      .domain(data.map((d) => d.label))
-      .range([margin.left, width - margin.right])
-      .padding(0.1);
+    // Create an SVG container
+    const svg = d3
+      .select(graphRef.current)
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
+    // Parse timestamps and prices
+    const parsedData = data.prices.map(([timestamp, price]) => ({
+      date: new Date(timestamp),
+      price: price,
+    }));
+
+    // Adjust x-axis scale for the entire data range
+    const xScale = d3.scaleTime().domain(d3.extent(parsedData, (d) => d.date)).range([0, width]);
+
+    // Adjust y-axis scale for the entire data range with a nice scale
     const yScale = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.value)])
+      .domain([d3.min(parsedData, (d) => d.price), d3.max(parsedData, (d) => d.price)])
       .nice()
-      .range([height - margin.bottom, margin.top]);
+      .range([height, 0]);
 
-    // Create the bars
-    svg
-      .selectAll('.bar')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', (d) => xScale(d.label))
-      .attr('y', (d) => yScale(d.value))
-      .attr('width', xScale.bandwidth())
-      .attr('height', (d) => height - margin.bottom - yScale(d.value))
-      .attr('fill', 'steelblue');
-
-    // Create x-axis
+    // Create x and y axes
     svg
       .append('g')
       .attr('class', 'x-axis')
-      .attr('transform', `translate(0,${height - margin.bottom})`)
+      .attr('transform', `translate(0,${height})`)
       .call(d3.axisBottom(xScale));
 
-    // Create y-axis
     svg
       .append('g')
       .attr('class', 'y-axis')
-      .attr('transform', `translate(${margin.left},0)`)
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale).ticks(5)); // Adjust the number of ticks for y-axis
 
-    // Cleanup when unmounting
-    return () => {
-      svg.selectAll('*').remove();
-    };
+    // Create a line generator
+    const line = d3
+      .line()
+      .x((d) => xScale(d.date))
+      .y((d) => yScale(d.price));
+
+    // Draw the line chart
+    svg
+      .append('path')
+      .datum(parsedData)
+      .attr('class', 'line')
+      .attr('d', line)
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-width', 2);
   }, [data]);
 
-  return (
-    <div className="graph-container">
-      <svg ref={svgRef}></svg>
-    </div>
-  );
+  return <div ref={graphRef}></div>;
 };
 
 export default Graph;
