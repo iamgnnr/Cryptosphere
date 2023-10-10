@@ -1,14 +1,8 @@
 
-import Graph from './Graph';
 
 
 const Card = ({ coin }) => {
-  const data = [
-    { label: 'A', value: 10 },
-    { label: 'B', value: 20 },
-    { label: 'C', value: 15 },
-    { label: 'D', value: 30 },
-  ];
+ 
 
   return (
     <div className="bg-slate-950 shadow-md rounded-md w-60 p-4">
@@ -31,8 +25,6 @@ const Card = ({ coin }) => {
       <p>Change 24hrs</p>
       <p>{coin.price_change_percentage_24h.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</p>
     </div>
- 
-        {/* <Graph data={data} /> */}
       </div>
     </div>
   );

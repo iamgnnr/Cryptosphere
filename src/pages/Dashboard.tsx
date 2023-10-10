@@ -3,7 +3,6 @@ import axios from 'axios';
 import Layout from '../components/Layout';
 import Card from '../components/Card';
 import DataHelper from '../components/DataHelper';
-import rd3 from 'react-d3-library';
 
 
 
