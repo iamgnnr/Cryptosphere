@@ -15,12 +15,23 @@ const Card = ({ coin }) => {
       <div className="text-lg font-semibold text-green-600">{coin.name}</div>
       <div className="text-gray-500">{coin.symbol}</div>
       <div className="mt-2">
-        <div className="text-green-600">{coin.current_price}</div>
-        <div className="text-green-600">{coin.market_cap_rank}</div>
-        <div className="text-green-600">{coin.market_cap}</div>
-        <div className="text-green-600">{coin.price_change_percentage_24h}</div>
-        <div className="text-green-600">{coin.price_change_percentage_7d}</div>
-        <Graph data={data} />
+        <div className="flex flex-row justify-between text-green-600">
+          <p>Current Price</p>
+          <p>{coin.current_price}</p>
+        </div>
+        <div className="flex flex-row justify-between text-green-600">
+          <p>Market Cap Rank</p>
+          <p>{coin.market_cap_rank}</p>
+        </div>
+        <div className="flex flex-row justify-between text-green-600">
+          <p>Market Cap</p>
+          <p>{coin.market_cap}</p>
+        </div>
+        <div className="flex flex-row justify-between text-green-600">
+          <p>Change 24hrs</p>
+          <p>{coin.price_change_percentage_24h}</p>
+        </div>
+        {/* <Graph data={data} /> */}
       </div>
     </div>
   );
