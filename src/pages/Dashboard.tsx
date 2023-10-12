@@ -1,13 +1,9 @@
-import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import Layout from '../components/Layout';
 import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
 
-
-
-let callNum = 0;
 
 const Dashboard = () => {
   const {
@@ -16,7 +12,7 @@ const Dashboard = () => {
     hasNextPage,
     isFetchingNextPage,
     status
-  } = useInfiniteQuery('topCoins', async ({ pageParam = 0 }) => {
+  } = useInfiniteQuery('topCoins', async ({ pageParam = 1 }) => {
     const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
       params: {
         vs_currency: 'usd',
@@ -26,20 +22,20 @@ const Dashboard = () => {
         sparkline: false,
       },
     })
-    callNum += 1;
-    console.log(`You have made ${callNum} calls`);
+    console.log(`Page param is ${pageParam}`)
     return res.data
   }, 
   {
     retry: false,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.length < 100) {
-        return null; // No more pages to fetch
-      }
-      return lastPage.length / 100; // Calculate the next page number
-    } 
-  });
+    getNextPageParam: (lastPage, pages) => {
+  if (lastPage.length < 100) {
+    return undefined; // No more pages to fetch
+  }
+  console.log(`page length: ${pages.length}`);
+  return ( pages.length > 1) ? pages.length : 2; // Calculate the next page number
+},
 
+  });
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -47,11 +43,6 @@ const Dashboard = () => {
   return (
     <>
     <Layout>
-        {/* {data.pages.flatMap((page, pageIndex) => (
-          page.map((coin, index) => (
-            <Card key={coin.id} coin={coin} />
-          ))
-        ))} */}
         {data.pages.flatMap((page, pageIndex) =>
           page.map((coin, index) => (
             <Card key={`${pageIndex}-${coin.id}`} coin={coin} />

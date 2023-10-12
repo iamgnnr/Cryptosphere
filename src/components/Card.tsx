@@ -2,8 +2,6 @@
 
 
 const Card = ({ coin }) => {
- 
-
   return (
     <div className="bg-slate-950 shadow-md rounded-md w-60 p-4">
       <div className="text-lg font-semibold text-green-600">{coin.name}</div>
@@ -23,7 +21,7 @@ const Card = ({ coin }) => {
     </div>
     <div className="flex flex-row justify-between text-green-600">
       <p>Change 24hrs</p>
-      <p>{coin.price_change_percentage_24h.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</p>
+      <p>{coin.price_change_percentage_24h?.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</p>
     </div>
       </div>
     </div>
