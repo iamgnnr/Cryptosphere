@@ -3,6 +3,8 @@ import axios from 'axios';
 import Layout from '../components/Layout';
 import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
+import FetchData from '../components/FetchData';
+import DataHelper from '../components/DataHelper';
 
 
 const Dashboard = () => {
@@ -12,26 +14,13 @@ const Dashboard = () => {
     hasNextPage,
     isFetchingNextPage,
     status
-  } = useInfiniteQuery('topCoins', async ({ pageParam = 1 }) => {
-    const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
-      params: {
-        vs_currency: 'usd',
-        order: 'market_cap_desc',
-        per_page: 100,
-        page: pageParam,
-        sparkline: false,
-      },
-    })
-    console.log(`Page param is ${pageParam}`)
-    return res.data
-  }, 
+  } = useInfiniteQuery('topCoins', DataHelper, 
   {
     retry: false,
     getNextPageParam: (lastPage, pages) => {
   if (lastPage.length < 100) {
     return undefined; // No more pages to fetch
   }
-  console.log(`page length: ${pages.length}`);
   return ( pages.length > 1) ? pages.length : 2; // Calculate the next page number
 },
 

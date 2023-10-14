@@ -4,8 +4,9 @@
 const Card = ({ coin }) => {
   return (
     <div className="bg-slate-950 shadow-md rounded-md w-60 p-4">
-      <div className="text-lg font-semibold text-green-600">{coin.name}</div>
+      <h1 className="text-lg font-semibold text-green-600">{coin.name}</h1>
       <div className="text-gray-500">{coin.symbol}</div>
+      <div className="text-gray-500"><img src={coin.image} alt="Coin Image" /></div>
       <div className="mt-2">
         <div className="flex flex-row justify-between text-green-600">
          <p>Current Price</p>
