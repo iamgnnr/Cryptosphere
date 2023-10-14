@@ -27,6 +27,12 @@ const fetchCoinData = async (coinId: string): Promise<CoinData> => {
   return response.data;
 };
 
+const DetailDataHelper = async () => {
+  const response = await axios.get('http://localhost:3000/data');
+
+  return response.data;
+};
+
 interface GraphData {
   // Define the structure of your graph data here
 }
@@ -42,6 +48,12 @@ const fetchGraphData = async (coinId: string): Promise<GraphData> => {
   return response.data;
 };
 
+const LocalGraphData = async () => {
+  const response = await axios.get(`http://localhost:3004/data`);
+
+  return response.data;
+};
+
 const CoinDetail: React.FC = () => {
   const { coinId } = useParams<{ coinId: string }>();
   const {
@@ -51,6 +63,7 @@ const CoinDetail: React.FC = () => {
     error: coinError,
   } = useQuery<CoinData, Error>(['coinData', coinId], () =>
     fetchCoinData(coinId)
+    // DetailDataHelper()
   );
   const {
     data: graphData,

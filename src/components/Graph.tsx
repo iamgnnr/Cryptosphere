@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const Graph = ({ data }) => {
+  console.log(data);
   const graphRef = useRef();
 
   useEffect(() => {
