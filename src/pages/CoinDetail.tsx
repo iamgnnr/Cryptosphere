@@ -33,7 +33,7 @@ const fetchCoinData = async (coinId: string): Promise<CoinData> => {
 };
 
 const DetailDataHelper = async () => {
-  const response = await axios.get('http://localhost:3000/data');
+  const response = await axios.get('http://localhost:3002/data');
 
   return response.data;
 };
@@ -107,7 +107,7 @@ const CoinDetail: React.FC = () => {
               <div className='flex flex-col'>
                 <h2 className='text-zinc-200'>Symbol: {coinData.symbol}</h2>
                 <h2 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h2>
-                <h2 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h2>
+                <h2 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h2>
               </div>
             </div>
 
@@ -124,14 +124,24 @@ const CoinDetail: React.FC = () => {
         </div>
         <h2 className='text-xl pb-2 text-zinc-200 p-4'>Description:</h2>
         <div className='flex flex-row justify-between'>
-          <div className='max-w-lg text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
-          <div className='flex flex-col border-2 border-stone-100 p-4 rounded-md'>
-            <h3 className='text-zinc-200'>Symbol: {coinData.symbol}</h3>
-            <h3 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h3>
-            <h3 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h3>
-            <h3 className='text-zinc-200'>Symbol: {coinData.symbol}</h3>
-            <h3 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h3>
-            <h3 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h3>
+          <div className='max-w-md text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
+          <div className='flex flex-col justify-evenly border-2 border-stone-100 p-4 rounded-md w-80'>
+            <h3 className='text-zinc-200'>Genesis Date: {coinData.genesis_date}</h3>
+            <h3 className='text-zinc-200'>Fully Diluted Valuation: {coinData.market_data.fully_diluted_valuation.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+            <h3 className='text-zinc-200'>Total Volume: {coinData.market_data.total_volume?.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+            <h3 className='text-zinc-200'>High 24hrs: {coinData.market_data.high_24h?.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+            <h3 className='text-zinc-200'>Low 24hrs: {coinData.market_data.low_24h?.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+            <h3 className='text-zinc-200'>24hr: {coinData.market_data.price_change_percentage_24h.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
+            <h3 className='text-zinc-200'>7d: {coinData.market_data.price_change_percentage_7d.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
+            <h3 className='text-zinc-200'>14d: {coinData.market_data.price_change_percentage_14d.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
+            <h3 className='text-zinc-200'>30d: {coinData.market_data.price_change_percentage_30d.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
+            <h3 className='text-zinc-200'>Market Cap Change 24hr: {coinData.market_data.market_cap_change_percentage_24h.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
+
+
+
+
+            <h3 className='text-zinc-200'>Max Supply: {coinData.market_data.max_supply}</h3>
+            <h3 className='text-zinc-200'>Circulating Supply: {coinData.market_data.circulating_supply}</h3>
           </div>
         </div>
         <Footer />
