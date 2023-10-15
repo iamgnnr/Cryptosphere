@@ -123,7 +123,7 @@ const CoinDetail: React.FC = () => {
           </div>
         </div>
         <h2 className='text-xl pb-2 text-zinc-200 p-4'>Description:</h2>
-        <div className='flex flex-row justify-between'>
+        <div className='flex flex-col lg:flex-row justify-between'>
           <div className='max-w-md text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
           <div className='flex flex-col justify-evenly border-2 border-stone-100 p-4 rounded-md w-80'>
             <h3 className='text-zinc-200'>Genesis Date: {coinData.genesis_date}</h3>
