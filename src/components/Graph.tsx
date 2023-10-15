@@ -6,9 +6,9 @@ const Graph = ({ data }) => {
 
   useEffect(() => {
     // Define the dimensions of the graph
-    const width = 700;
-    const height = 350;
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const width = 600;
+    const height = 300;
+    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 
     // Create an SVG container
     const svg = d3
@@ -17,7 +17,8 @@ const Graph = ({ data }) => {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
+      .attr('transform', `translate(${margin.left},${margin.top})`)
+      .style("stroke", "#ffffff");
 
     // Parse timestamps and prices
     const parsedData = data.prices.map(([timestamp, price]) => ({
@@ -41,6 +42,7 @@ const Graph = ({ data }) => {
       .attr('class', 'x-axis')
       .attr('transform', `translate(0,${height})`)
       .call(d3.axisBottom(xScale));
+
 
     svg
       .append('g')

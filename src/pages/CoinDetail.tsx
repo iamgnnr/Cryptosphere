@@ -126,9 +126,12 @@ const CoinDetail: React.FC = () => {
         <div className='flex flex-row justify-between'>
           <div className='max-w-lg text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
           <div className='flex flex-col border-2 border-stone-100 p-4 rounded-md'>
-            <h2 className='text-zinc-200'>Symbol: {coinData.symbol}</h2>
-            <h2 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h2>
-            <h2 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h2>
+            <h3 className='text-zinc-200'>Symbol: {coinData.symbol}</h3>
+            <h3 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h3>
+            <h3 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h3>
+            <h3 className='text-zinc-200'>Symbol: {coinData.symbol}</h3>
+            <h3 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h3>
+            <h3 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h3>
           </div>
         </div>
         <Footer />
