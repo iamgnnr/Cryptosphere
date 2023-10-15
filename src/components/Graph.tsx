@@ -2,13 +2,12 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const Graph = ({ data }) => {
-  console.log(data);
   const graphRef = useRef();
 
   useEffect(() => {
     // Define the dimensions of the graph
-    const width = 800;
-    const height = 400;
+    const width = 700;
+    const height = 350;
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
 
     // Create an SVG container

@@ -1,11 +1,12 @@
 
-const Layout = ({ children }) => {
+const Layout = ({children}) => {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid gap-4 gap-x-14 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-      {children}
+    <div className="bg-slate-900 min-h-screen flex items-center justify-center rounded-md">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+        {children}
+      </div>
     </div>
   );
 };
 
 export default Layout;
-

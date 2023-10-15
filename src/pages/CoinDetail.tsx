@@ -2,6 +2,11 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Graph from '../components/Graph';
+import Footer from '../components/Footer';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom';
+import Layout from '../components/Layout';
+
 
 interface CoinData {
   name: string;
@@ -62,8 +67,8 @@ const CoinDetail: React.FC = () => {
     isError: isCoinError,
     error: coinError,
   } = useQuery<CoinData, Error>(['coinData', coinId], () =>
-    fetchCoinData(coinId)
-    // DetailDataHelper()
+    // fetchCoinData(coinId)
+    DetailDataHelper()
   );
   const {
     data: graphData,
@@ -72,7 +77,7 @@ const CoinDetail: React.FC = () => {
     error: graphError,
   } = useQuery<GraphData, Error>(
     ['graphData', coinId],
-    () => fetchGraphData(coinId),
+    () => LocalGraphData(coinId),
     {
       enabled: !!coinData, // Only fetch graph data if coin data is available
     }
@@ -87,25 +92,48 @@ const CoinDetail: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Coin Detail</h1>
-      <h2>Detail Page</h2>
-      {/* Render your Graph component with graphData here */}
-      {isGraphLoading ? (
-        <div>Loading graph data...</div>
-      ) : isGraphError ? (
-        <div>Error: {graphError.message}</div>
-      ) : (
-        <Graph data={graphData} />
-      )}
-      <ul>
-        <li>Name: {coinData.name}</li>
-        <li>Symbol: {coinData.symbol}</li>
-        <li>Market Cap Rank: {coinData.market_cap_rank}</li>
-        <li>Current Price (USD): {coinData.market_data.current_price.usd}</li>
-        <li dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></li>
-      </ul>
-    </div>
+    <Layout>
+      <div className='container mx-auto p-10'>
+        <div className='flex flex-col'>
+          <div>
+            <Link to='/'>
+              <div>
+                <ArrowLeftIcon className="h-6 w-6 text-zinc-200" />
+              </div>
+            </Link>
+            <div className='flex flex-row justify-between items-center p-10'>
+              <h1 className='text-5xl pt-6 pb-6 text-zinc-100'>{coinData.name}</h1>
+              <img src={coinData.image?.large} className='h-20' alt="Coin Image" />
+              <div className='flex flex-col'>
+                <h2 className='text-zinc-200'>Symbol: {coinData.symbol}</h2>
+                <h2 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h2>
+                <h2 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h2>
+              </div>
+            </div>
+
+          </div>
+          <div>
+            {isGraphLoading ? (
+              <div>Loading graph data...</div>
+            ) : isGraphError ? (
+              <div>Error: {graphError.message}</div>
+            ) : (
+              <Graph data={graphData} />
+            )}
+          </div>
+        </div>
+        <h2 className='text-xl pb-2 text-zinc-200 p-4'>Description:</h2>
+        <div className='flex flex-row justify-between'>
+          <div className='max-w-lg text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
+          <div className='flex flex-col border-2 border-stone-100 p-4 rounded-md'>
+            <h2 className='text-zinc-200'>Symbol: {coinData.symbol}</h2>
+            <h2 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h2>
+            <h2 className='text-zinc-200'>Current Price (USD): {coinData.market_data.current_price.usd}</h2>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    </Layout>
   );
 };
 

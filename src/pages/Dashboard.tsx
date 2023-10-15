@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
-import Layout from '../components/Layout';
+import GridLayout from '../components/GridLayout';
 import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
 import FetchData from '../components/FetchData';
@@ -31,13 +31,13 @@ const Dashboard = () => {
   }
   return (
     <>
-    <Layout>
+    <GridLayout>
         {data.pages.flatMap((page, pageIndex) =>
           page.map((coin, index) => (
             <Card key={`${pageIndex}-${coin.id}`} coin={coin} />
           ))
         )}
-    </Layout>
+    </GridLayout>
     <InfiniteScroll loadMore={fetchNextPage} hasMore={hasNextPage} />
     </>
   );
