@@ -3,7 +3,7 @@
     width:100%;
     margin:0;
     padding:0;
-    background:radial-gradient(mediumseagreen,black);
+    background:radial-gradient(#475569,black);
     display:flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +23,8 @@
     position: absolute;
     color: white;
     font-size: 6em;
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
   }
 
   .about {
