@@ -103,7 +103,7 @@ const CoinDetail: React.FC = () => {
             </Link>
             <div className='flex flex-row justify-between items-center p-10'>
               <h1 className='text-5xl pt-6 pb-6 text-zinc-100'>{coinData.name}</h1>
-              <img src={coinData.image?.large} className='h-20' alt="Coin Image" />
+              <img src={coinData.image?.large} className='sm: invisible md:visible h-20' alt="Coin Image" />
               <div className='flex flex-col'>
                 <h2 className='text-zinc-200'>Symbol: {coinData.symbol}</h2>
                 <h2 className='text-zinc-200'>Market Cap Rank: {coinData.market_cap_rank}</h2>
@@ -124,8 +124,8 @@ const CoinDetail: React.FC = () => {
         </div>
         <h2 className='text-xl pb-2 text-zinc-200 p-4'>Description:</h2>
         <div className='flex flex-col lg:flex-row justify-between'>
-          <div className='md:max-w-lg text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
-          <div className='flex flex-col justify-evenly border-2 border-stone-100 p-4 rounded-md w-80'>
+          <div className='md:w-full text-zinc-300 p-4' dangerouslySetInnerHTML={{ __html: coinData.description?.en }}></div>
+          <div className='flex flex-col w-full lg:w-3/4 justify-evenly border-2 border-stone-100 p-4 rounded-md w-80'>
             <h3 className='text-zinc-200'>Genesis Date: {coinData.genesis_date}</h3>
             <h3 className='text-zinc-200'>Fully Diluted Valuation: {coinData.market_data.fully_diluted_valuation.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
             <h3 className='text-zinc-200'>Total Volume: {coinData.market_data.total_volume?.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
