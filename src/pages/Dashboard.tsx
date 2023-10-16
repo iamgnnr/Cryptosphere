@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
 import FetchData from '../components/FetchData';
 import DataHelper from '../components/DataHelper';
+import Hero from '../components/Hero';
 
 
 const Dashboard = () => {
@@ -31,6 +32,7 @@ const Dashboard = () => {
   }
   return (
     <>
+    <Hero />
     <GridLayout>
         {data.pages.flatMap((page, pageIndex) =>
           page.map((coin, index) => (
