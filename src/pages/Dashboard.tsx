@@ -1,5 +1,4 @@
 import { useInfiniteQuery } from 'react-query';
-import axios from 'axios';
 import GridLayout from '../components/GridLayout';
 import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
@@ -15,7 +14,7 @@ const Dashboard = () => {
     hasNextPage,
     isFetchingNextPage,
     status
-  } = useInfiniteQuery('topCoins', DataHelper, 
+  } = useInfiniteQuery('topCoins', FetchData, 
   {
     retry: false,
     getNextPageParam: (lastPage, pages) => {

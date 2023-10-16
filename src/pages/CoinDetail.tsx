@@ -67,8 +67,7 @@ const CoinDetail: React.FC = () => {
     isError: isCoinError,
     error: coinError,
   } = useQuery<CoinData, Error>(['coinData', coinId], () =>
-    // fetchCoinData(coinId)
-    DetailDataHelper()
+    fetchCoinData(coinId)
   );
   const {
     data: graphData,
@@ -77,7 +76,7 @@ const CoinDetail: React.FC = () => {
     error: graphError,
   } = useQuery<GraphData, Error>(
     ['graphData', coinId],
-    () => LocalGraphData(coinId),
+    () => fetchGraphData(coinId),
     {
       enabled: !!coinData, // Only fetch graph data if coin data is available
     }
@@ -136,8 +135,8 @@ const CoinDetail: React.FC = () => {
             <h3 className='text-zinc-200'>14d: {coinData.market_data.price_change_percentage_14d.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
             <h3 className='text-zinc-200'>30d: {coinData.market_data.price_change_percentage_30d.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
             <h3 className='text-zinc-200'>Market Cap Change 24hr: {coinData.market_data.market_cap_change_percentage_24h.toLocaleString('en-US', { maximumFractionDigits: 2 })}%</h3>
-            <h3 className='text-zinc-200'>Max Supply: {coinData.market_data.max_supply.toLocaleString('en-US')}</h3>
-            <h3 className='text-zinc-200'>Circulating Supply: {coinData.market_data.circulating_supply.toLocaleString('en-US')}</h3>
+            <h3 className='text-zinc-200'>Max Supply: {coinData.market_data.max_supply?.toLocaleString('en-US')}</h3>
+            <h3 className='text-zinc-200'>Circulating Supply: {coinData.market_data.circulating_supply?.toLocaleString('en-US')}</h3>
           </div>
         </div>
         <Footer />
