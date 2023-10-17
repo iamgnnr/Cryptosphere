@@ -3,7 +3,7 @@ import GridLayout from '../components/GridLayout';
 import Card from '../components/Card';
 import InfiniteScroll from '../components/InfiniteScroll';
 import FetchData from '../components/FetchData';
-import DataHelper from '../components/DataHelper';
+import { DataHelper } from '../components/LocalDataHelper';
 import Hero from '../components/Hero';
 import { Dna } from 'react-loader-spinner';
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
     hasNextPage,
     isFetchingNextPage,
     status
-  } = useInfiniteQuery('topCoins', FetchData,
+  } = useInfiniteQuery('topCoins', DataHelper,
     {
       retry: false,
       getNextPageParam: (lastPage, pages) => {

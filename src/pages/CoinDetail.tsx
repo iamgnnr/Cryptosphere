@@ -7,6 +7,9 @@ import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { Dna } from 'react-loader-spinner';
+import { DetailDataHelper } from '../components/LocalDataHelper';
+import { LocalGraphData } from '../components/LocalDataHelper';
+
 
 interface CoinData {
   name: string;
@@ -32,11 +35,6 @@ const fetchCoinData = async (coinId: string): Promise<CoinData> => {
   return response.data;
 };
 
-const DetailDataHelper = async () => {
-  const response = await axios.get('http://localhost:3002/data');
-
-  return response.data;
-};
 
 interface GraphData {
   // Define the structure of your graph data here
@@ -53,11 +51,6 @@ const fetchGraphData = async (coinId: string): Promise<GraphData> => {
   return response.data;
 };
 
-const LocalGraphData = async () => {
-  const response = await axios.get(`http://localhost:3004/data`);
-
-  return response.data;
-};
 
 const CoinDetail: React.FC = () => {
   const { coinId } = useParams<{ coinId: string }>();
@@ -67,7 +60,7 @@ const CoinDetail: React.FC = () => {
     isError: isCoinError,
     error: coinError,
   } = useQuery<CoinData, Error>(['coinData', coinId], () =>
-    fetchCoinData(coinId)
+    DetailDataHelper()
   );
   const {
     data: graphData,
@@ -76,7 +69,7 @@ const CoinDetail: React.FC = () => {
     error: graphError,
   } = useQuery<GraphData, Error>(
     ['graphData', coinId],
-    () => fetchGraphData(coinId),
+    () => LocalGraphData(coinId),
     {
       enabled: !!coinData, // Only fetch graph data if coin data is available
     }
