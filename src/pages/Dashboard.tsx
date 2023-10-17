@@ -15,7 +15,7 @@ const Dashboard = () => {
     hasNextPage,
     isFetchingNextPage,
     status
-  } = useInfiniteQuery('topCoins', DataHelper,
+  } = useInfiniteQuery('topCoins', FetchData,
     {
       retry: false,
       getNextPageParam: (lastPage, pages) => {

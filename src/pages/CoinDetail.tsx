@@ -60,7 +60,7 @@ const CoinDetail: React.FC = () => {
     isError: isCoinError,
     error: coinError,
   } = useQuery<CoinData, Error>(['coinData', coinId], () =>
-    DetailDataHelper()
+    fetchCoinData(coinId)
   );
   const {
     data: graphData,
@@ -69,7 +69,7 @@ const CoinDetail: React.FC = () => {
     error: graphError,
   } = useQuery<GraphData, Error>(
     ['graphData', coinId],
-    () => LocalGraphData(coinId),
+    () => fetchGraphData(coinId),
     {
       enabled: !!coinData, // Only fetch graph data if coin data is available
     }
