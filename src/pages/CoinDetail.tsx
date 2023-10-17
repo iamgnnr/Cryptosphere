@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-
+import { Dna } from 'react-loader-spinner';
 
 interface CoinData {
   name: string;
@@ -83,7 +83,16 @@ const CoinDetail: React.FC = () => {
   );
 
   if (isCoinLoading) {
-    return <div>Loading...</div>;
+    return <div>
+      <Dna
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="dna-loading"
+        wrapperStyle={{}}
+        wrapperClass="dna-wrapper"
+      />
+    </div>;
   }
 
   if (isCoinError) {
