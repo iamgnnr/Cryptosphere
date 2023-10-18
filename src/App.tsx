@@ -1,23 +1,35 @@
 import './App.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Link
+} from "react-router-dom"
 import Dashboard from './pages/Dashboard'
+import Layout from './components/Layout'
 import CoinDetail from './pages/CoinDetail';
-import NotFound from './pages/404';
+import ErrorPage from './pages/Error';
+import NotFoundPage from './pages/404';
 
 const queryClient = new QueryClient;
+
+const router = createBrowserRouter(createRoutesFromElements(
+    <Route>
+    <Route path='/' element={<Dashboard />} />
+    <Route index element={<Dashboard />} />
+    <Route path='coins/:coinId' element={<CoinDetail />} errorElement={<ErrorPage />} />
+    <Route path='*' element={<NotFoundPage />} />
+    </Route>
+))
+
 
 function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <Routes>
-          <Route path='/' element={<Dashboard />} />
-          <Route path=':coinId' element={<CoinDetail />} />
-          <Route path='*' element={<Dashboard />} />
-        </Routes>
-      </Router>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   )
 }

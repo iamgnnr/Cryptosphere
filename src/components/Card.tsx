@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Card = ({ coin }) => {
   return (
-    <Link to={`/${coin.id}`}>
+    <Link to={`/coins/${coin.id}`}>
     <div className="bg-slate-900 shadow-md rounded-md w-60 p-4 min-w-max">
       <h1 className="text-lg font-semibold text-zinc-200">{coin.name}</h1>
       <div className="text-zinc-200">{coin.symbol}</div>

@@ -9,6 +9,7 @@ import Layout from '../components/Layout';
 import { Dna } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 
+
 // import { DetailDataHelper } from '../components/LocalDataHelper';
 // import { LocalGraphData } from '../components/LocalDataHelper';
 
@@ -35,11 +36,9 @@ const fetchCoinData = async (coinId: string) => {
         vs_currency: 'usd',
       },
     });
-
-    return response.data;
+    if (response) return response.data;
   } catch (error) {
     console.error('An error occurred while fetching coin data:', error);
-    <Navigate to='/' replace={true} />
 
   }
 };
@@ -53,10 +52,8 @@ const fetchGraphData = async (coinId: string) => {
         days: 7,
       },
     });
-
     return response.data;
   } catch (error) {
-
     console.error('An error occurred while fetching graph data:', error);
   }
 };
@@ -100,7 +97,7 @@ const CoinDetail: React.FC = () => {
   }
 
   if (isCoinError) {
-    return <div>Error: {coinError.message}</div>;
+    console.log("Got error");
   }
 
   return (
@@ -109,9 +106,7 @@ const CoinDetail: React.FC = () => {
         <div className='flex flex-col'>
           <div>
             <Link to='/'>
-              <div>
                 <ArrowLeftIcon className="h-6 w-6 text-zinc-200" />
-              </div>
             </Link>
             <div className='flex flex-row justify-between items-center p-10'>
               <h1 className='text-5xl pt-6 pb-6 text-zinc-100'>{coinData.name}</h1>
