@@ -18,7 +18,6 @@ const queryClient = new QueryClient;
 const router = createBrowserRouter(createRoutesFromElements(
     <Route>
     <Route path='/' element={<Dashboard />} />
-    <Route index element={<Dashboard />} />
     <Route path='coins/:coinId' element={<CoinDetail />} errorElement={<ErrorPage />} />
     <Route path='*' element={<NotFoundPage />} />
     </Route>
