@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const FetchData = async ({ pageParam = 1 }) => {
   // const navigate = useNavigate();
@@ -19,7 +19,7 @@ const FetchData = async ({ pageParam = 1 }) => {
 
     console.error('An error occurred:', error);
 
-    // navigate('/');
+    Navigate('/');
 
   }
 }

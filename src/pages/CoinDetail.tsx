@@ -7,8 +7,10 @@ import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { Dna } from 'react-loader-spinner';
-import { DetailDataHelper } from '../components/LocalDataHelper';
-import { LocalGraphData } from '../components/LocalDataHelper';
+import { Navigate } from 'react-router-dom';
+
+// import { DetailDataHelper } from '../components/LocalDataHelper';
+// import { LocalGraphData } from '../components/LocalDataHelper';
 
 
 interface CoinData {
@@ -25,31 +27,40 @@ interface CoinData {
   };
 }
 
-const fetchCoinData = async (coinId: string): Promise<CoinData> => {
-  const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}`, {
-    params: {
-      vs_currency: 'usd',
-    },
-  });
 
-  return response.data;
+const fetchCoinData = async (coinId: string) => {
+  try {
+    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}`, {
+      params: {
+        vs_currency: 'usd',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('An error occurred while fetching coin data:', error);
+    <Navigate to='/' replace={true} />
+
+  }
 };
 
 
-interface GraphData {
-  // Define the structure of your graph data here
-}
+const fetchGraphData = async (coinId: string) => {
+  try {
+    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
+      params: {
+        vs_currency: 'usd',
+        days: 7,
+      },
+    });
 
-const fetchGraphData = async (coinId: string): Promise<GraphData> => {
-  const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
-    params: {
-      vs_currency: 'usd',
-      days: 7,
-    },
-  });
+    return response.data;
+  } catch (error) {
 
-  return response.data;
+    console.error('An error occurred while fetching graph data:', error);
+  }
 };
+
 
 
 const CoinDetail: React.FC = () => {
