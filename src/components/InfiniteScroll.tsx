@@ -1,7 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-function InfiniteScroll({ loadMore, hasMore }) {
-  const observerRef = useRef(null);
+interface InfiniteScrollProps {
+  loadMore: () => void;
+  hasMore: boolean;
+}
+
+function InfiniteScroll({ loadMore, hasMore }: InfiniteScrollProps) {
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const options = {
@@ -12,13 +17,15 @@ function InfiniteScroll({ loadMore, hasMore }) {
 
     const observer = new IntersectionObserver(handleIntersection, options);
 
-    let target = document.querySelector(".watch");
+    const target = document.querySelector(".watch");
 
-    observer.observe(target);
+    if (target) {
+      observer.observe(target);
+    }
 
   }, [hasMore]);
 
-  const handleIntersection = (entries, observer) => {
+  const handleIntersection: IntersectionObserverCallback = (entries) => {
     const entry = entries[0];
     if (entry.isIntersecting) {
       loadMore();
