@@ -5,10 +5,8 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Link
 } from "react-router-dom"
 import Dashboard from './pages/Dashboard'
-import Layout from './components/Layout'
 import CoinDetail from './pages/CoinDetail';
 import ErrorPage from './pages/Error';
 import NotFoundPage from './pages/404';
