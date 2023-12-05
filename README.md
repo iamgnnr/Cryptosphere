@@ -1,4 +1,4 @@
-# Cryptocurrency Dashboard
+# Crypto Index
 
 ![Screen Shot](./header.png)
 
