@@ -1,6 +1,6 @@
 # Cryptosphere
 
-![Screen Shot](./header.png)
+![Screen Shot](./banner.png)
 
 
 [Demo Site](https://cool-cactus-d67887.netlify.app)
