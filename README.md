@@ -1,4 +1,4 @@
-# CryptoSphere
+# Cryptosphere
 
 ![Screen Shot](./header.png)
 
