@@ -20,7 +20,7 @@ const Hero = () => {
                     <img src={Bitcoin} className='bitcoin-logo' />
                 </div>
             </div>
-            <h1 className='hero-title'>Coin Index</h1>
+            <h1 className='hero-title'>Crypto Index</h1>
         </div>
     );
 }
