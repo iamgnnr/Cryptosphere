@@ -1,4 +1,4 @@
-# My Personal Crypto Index
+# Crypto-Sphere
 
 ![Screen Shot](./header.png)
 
