@@ -1,4 +1,4 @@
-# Crypto Index
+# My Global Crypto Index
 
 ![Screen Shot](./header.png)
 
